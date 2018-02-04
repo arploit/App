@@ -24,10 +24,10 @@ import java.net.URLEncoder;
  */
 
 public class BackGroundWorker extends AsyncTask<String,Void,String> {
-    Context context ;
-    AlertDialog alertDialog;
+    private Context mcontext ;
+    private AlertDialog alertDialog;
     BackGroundWorker(Context ctx){
-        context= ctx;
+        mcontext= ctx;
     }
     @Override
     protected String doInBackground(String... params) {
@@ -71,12 +71,17 @@ public class BackGroundWorker extends AsyncTask<String,Void,String> {
         return null;
     }
     protected void onPreExecute() {
-        alertDialog = new AlertDialog.Builder(context).create();
+        alertDialog = new AlertDialog.Builder(mcontext).create();
         alertDialog.setTitle("Login Status");
     }
 
     @Override
     protected void onPostExecute(String result) {
+        if (result.equals("Connection successful")){
+            Intent i = new Intent(mcontext,SecondActivity.class);
+            mcontext.startActivity(i);
+
+        }
         alertDialog.setMessage(result);
         alertDialog.show();
     }
